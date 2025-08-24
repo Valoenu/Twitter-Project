@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
 // Create and connect mongoo db
 const mongoConnectDB = async () => {
