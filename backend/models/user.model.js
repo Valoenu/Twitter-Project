@@ -1,72 +1,6 @@
-// import mongoose from "mongoose";
-
-// //Create User Model Schema
-// const userSchema = new mongoose.Schema(
-//   {
-//     username: {
-//       type: String,
-//       required: true,
-//       unique: true,
-//     },
-//     fullName: {
-//       type: String,
-//       required: true,
-//     },
-//     password: {
-//       type: String,
-//       reuired: true,
-//       minLength: 6, // Make sure that the user has at least 6 characters long password
-//     },
-//     email: {
-//       type: String,
-//       required: true,
-//       unique: true,
-//     },
-//     followers: [
-//       {
-//         type: mongoose.Schema.Types.ObjectId, // a follower will need to have this object type
-//         ref: "User", // refferance to the User collection
-//         default: [],
-//       },
-//     ],
-//     following: [
-//       {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User",
-//         default: [],
-//       },
-//     ],
-
-//     profileImg: {
-//       type: String,
-//       default: "",
-//     },
-
-//     coverImg: {
-//       type: String,
-//       default: "",
-//     },
-//     //Optional
-//     bio: {
-//       type: String,
-//       default: "",
-//     },
-//     link: {
-//       type: String,
-//       default: "",
-//     },
-//   ],
-//   },
-//   { timestamps: true } // it will give us some additional details from database sucha as 'createdAt, updatedAt'
-// );
-
-// // Create model based on this schema
-// const User = mongoose.model("User", userSchema); // Mongoo will automatically onvert "User" -> "users"
-
-// export default User;
-
 import mongoose from "mongoose";
 
+//Create User Model Schema
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -80,8 +14,8 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
-      minLength: 6,
+      required: true, // a follower will need to have this object type
+      minLength: 6, // Make sure that the user has at least 6 characters long password
     },
     email: {
       type: String,
@@ -91,7 +25,7 @@ const userSchema = new mongoose.Schema(
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "User", // refferance to the User collection
         default: [],
       },
     ],
@@ -127,9 +61,11 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true } // it will give us some additional details from database sucha as 'createdAt, updatedAt'
 );
 
+// Crete model based on created previous schema
 const User = mongoose.model("User", userSchema);
 
+// export user Model
 export default User;

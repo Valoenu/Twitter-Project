@@ -5,7 +5,7 @@ import {
   login,
   logout,
   signup,
-} from "../controllers/auth.controller.js"; //Import function from controllers folder (It makes the code better to understand)
+} from "../controllers/controller.auth.js"; //Import function from controllers folder (It makes the code better to understand)
 import { routeProtected } from "../middlewere/routeProtected.js";
 
 //Create router

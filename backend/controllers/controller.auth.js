@@ -1,6 +1,7 @@
 //This folder makes the code easier to understand
 
-import User from "../models/model.user.js";
+// import User from "../models/user.model.js";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
 
@@ -74,13 +75,54 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  res.json({
-    data: "You get the login access endpoint",
-  });
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      user?.password || ""
+    ); // compare user password with databse
+
+    if (!user || !isPasswordCorrect) {
+      return req
+        .status(400)
+        .json({ error: "Invalid password and check username" });
+    }
+
+    generateTokenAndSetCookie(user._id, res);
+
+    res.status(200).json({
+      _id: userser._id,
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+      followers: user.followers,
+      following: user.following,
+      profileImg: user.profileImg,
+      coverImg: user.coverImg,
+    });
+  } catch (error) {
+    console.log("Login Controller error", error.message);
+    res.status(500).json({ error: "Server Internal error " });
+  }
 };
 
 export const logout = async (req, res) => {
-  res.json({
-    data: "You get the logout  access endpoint",
-  });
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Successfully logged out " });
+  } catch (error) {
+    console.log("Logout Controller error", error.message);
+    res.status(500).json({ error: "Server Internal error " });
+  }
+};
+
+export const authCheck = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id); // find user
+  } catch (error) {
+    // catch error
+    console.log("Auth check function error in controllers folder ");
+    res.status(500).json({ error: "Server Internal Error " });
+  }
 };
