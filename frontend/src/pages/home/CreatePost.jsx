@@ -13,8 +13,9 @@ const CreatePost = () => {
   const [img, setImg] = useState(null);
   const imgRef = useRef(null);
 
+  // Display user profile
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient(); // update cache
 
   const {
     mutate: createPost,
@@ -22,9 +23,12 @@ const CreatePost = () => {
     isError,
     error,
   } = useMutation({
+    // mutation function
     mutationFn: async ({ text, img }) => {
+      // mutation function
       try {
         const res = await fetch("/api/posts/create", {
+          // fetch data
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,11 +45,12 @@ const CreatePost = () => {
       }
     },
 
+    // on success function
     onSuccess: () => {
-      setText("");
-      setImg(null);
+      setText(""); // reset state of user profile
+      setImg(null); // reset user image
       toast.success("Post created successfully");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] }); // update query
     },
   });
 

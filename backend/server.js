@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 // Create Middlewere -> Function which run before you do anything, after or just at any moment between
-app.use(express.json({ limit: "5mb" }));
+app.use(express.json({ limit: "5mb" })); // set a value of the post file si
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cookieParser()); // cookie parser to be able to parse the request and get cookies
 

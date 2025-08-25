@@ -23,11 +23,12 @@ const Posts = ({ feedType, username, userId }) => {
 
   const POST_ENDPOINT = getPostEndpoint(); // get post endpoint
 
+  // Fetch data from use query
   const {
     data: posts,
     isLoading,
-    refetch,
-    isRefetching,
+    refetch, // React query
+    isRefetching, // React query
   } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
@@ -48,22 +49,24 @@ const Posts = ({ feedType, username, userId }) => {
 
   useEffect(() => {
     // use effect
-    refetch();
+    refetch(); // React Query refatch function
   }, [feedType, refetch, username]);
 
   // return user interface
   return (
     <>
-      {(isLoading || isRefetching) && (
+      {(isLoading || isRefetching) && ( // if is not loading
         <div className="flex flex-col justify-center">
           <PostSkeleton />
           <PostSkeleton />
           <PostSkeleton />
         </div>
       )}
-      {!isLoading && !isRefetching && posts?.length === 0 && (
-        <p className="text-center my-4">No posts in this tab. Switch 👻</p>
-      )}
+      {!isLoading &&
+        !isRefetching &&
+        posts?.length === 0 && ( // if there is no posts
+          <p className="text-center my-4">Posts not found</p>
+        )}
       {!isLoading && !isRefetching && posts && (
         <div>
           {posts.map((post) => (

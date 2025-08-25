@@ -12,31 +12,35 @@ import { FaHeart } from "react-icons/fa6";
 
 // create notification page
 const NotificationPage = () => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient(); // To store data in the cache
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
+      // async query function
       try {
-        const res = await fetch("/api/notifications");
+        const res = await fetch("/api/notifications"); // send fetch request enpoint
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Something went wrong");
         return data;
       } catch (error) {
+        // catch error
         throw new Error(error);
       }
     },
-  });
+  }); // It is a query so I don't have to pass onSuccess function
 
+  // Destructure delete notifications data from use Mutation hook
   const { mutate: deleteNotifications } = useMutation({
     mutationFn: async () => {
       try {
+        // try send the delete method request
         const res = await fetch("/api/notifications", {
           method: "DELETE",
         });
         const data = await res.json();
 
         if (!res.ok) throw new Error(data.error || "Something went wrong");
-        return data;
+        return data; // return data (I'am returning data in this project but actually I don't use it (It's a good habit to have)
       } catch (error) {
         throw new Error(error);
       }

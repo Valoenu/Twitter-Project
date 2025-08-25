@@ -34,7 +34,7 @@ const ProfilePage = () => {
   const {
     data: user,
     isLoading,
-    refetch,
+    refetch, // refetch
     isRefetching,
   } = useQuery({
     queryKey: ["userProfile"],
@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
 
   const isMyProfile = authUser._id === user?._id;
-  const memberSinceDate = formatMemberSinceDate(user?.createdAt);
+  const memberSinceDate = formatMemberSinceDate(user?.createdAt); // date format
   const amIFollowing = authUser?.following.includes(user?._id);
 
   // create handle image function with event, state and callback
@@ -191,7 +191,7 @@ const ProfilePage = () => {
                       <>
                         <FaLink className="w-3 h-3 text-slate-500" />
                         <a
-                          href="https://youtube.com/@asaprogrammer_"
+                          href=""
                           target="_blank"
                           rel="noreferrer"
                           className="text-sm text-blue-500 hover:underline"
